@@ -10,15 +10,31 @@ const datagridHierarchy = [
     "tr",
 ]
 
-const assignments = document.querySelector("#AssignmentsGrid")
+const script = () => {
+    const assignments = document.querySelector("#AssignmentsGrid")
 
-if (assignments) {
-    const datagrid = assignments.querySelector(":scope > .dx-datagrid");
-    const rows = datagrid.querySelectorAll(datagridHierarchy.join(" > "));
+    if (assignments) {
+        const datagrid = assignments.querySelector(":scope > .dx-datagrid");
+        const rows = datagrid.querySelectorAll(datagridHierarchy.join(" > "));
 
-    rows.forEach(row => {
-        console.log(row.children[0].innerHTML);
-    })
-} else {
-    console.log("No assignments found.");
+        rows.forEach(row => {
+            console.log(row.children[0].innerHTML);
+        })
+    } else {
+        console.log("No assignments found.");
+    }
 }
+
+const content = document.querySelector("#gradebook-content");
+
+let scriptTimer;
+
+// Maybe use MutationObserver instead?
+content.addEventListener("DOMSubtreeModified", () => {
+    if (scriptTimer) {
+        clearTimeout(scriptTimer);
+    }
+    scriptTimer = setTimeout(script, 100);
+});
+
+script();
