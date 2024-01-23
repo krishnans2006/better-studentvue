@@ -6,7 +6,6 @@ const headerHierarchy = [
     "tbody",
 ]
 
-
 const datagridHierarchy = [
     ":scope",
     ".dx-datagrid-rowsview",
@@ -19,6 +18,18 @@ const datagridHierarchy = [
     "tr",
 ]
 
+const footerHierarchy = [
+    ":scope",
+    ".dx-datagrid-total-footer",
+    ".dx-datagrid-content",
+    ".dx-datagrid-table",
+    "tbody",
+    "tr",
+]
+const footerElement = 7;  // must have a <div> child
+
+let myModification = false;
+
 const script = () => {
     const assignments = document.querySelector("#AssignmentsGrid")
 
@@ -26,6 +37,7 @@ const script = () => {
         const datagrid = assignments.querySelector(":scope > .dx-datagrid");
         const headers = datagrid.querySelector(headerHierarchy.join(" > "));
         const rows = datagrid.querySelectorAll(datagridHierarchy.join(" > "));
+        const footer = datagrid.querySelector(footerHierarchy.join(" > "));
 
         let myPoints = 0;
         let totalPoints = 0;
@@ -59,7 +71,14 @@ const script = () => {
             }
         })
 
-        console.log(`My points: ${myPoints}, Total points: ${totalPoints}, Grade: ${myPoints / totalPoints * 100}%`);
+        const percent = myPoints / totalPoints * 100;
+
+        const pointsText = `${myPoints} / ${totalPoints}\n${percent.toFixed(4)}%`;
+        console.log(pointsText);
+
+        const modifyElement = footer.querySelectorAll(":scope > td")[footerElement];
+        myModification = true;
+        modifyElement.querySelector(":scope > div").innerText = pointsText;
     } else {
         console.log("No assignments found.");
     }
@@ -71,6 +90,11 @@ let scriptTimer;
 
 // Maybe use MutationObserver instead?
 content.addEventListener("DOMSubtreeModified", () => {
+    if (myModification) {  // prevent infinite loop
+        setTimeout(() => myModification = false, 50);
+        clearTimeout(scriptTimer);
+        return;
+    }
     if (scriptTimer) {
         clearTimeout(scriptTimer);
     }
