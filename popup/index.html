@@ -3,8 +3,34 @@
   <head>
     <meta charset="UTF-8">
     <title>Better StudentVUE - Popup</title>
+    <link rel="stylesheet" href="index.css">
   </head>
   <body>
+    <div id="content">
+      <h1>Better StudentVUE</h1>
 
+      <div id="preferences">
+        <label for="global-toggle">
+          <input id="global-toggle" name="global-toggle" type="checkbox" checked>
+          Enable Better StudentVUE
+        </label>
+
+        <br />
+
+        <label for="debug-toggle">
+          <input id="debug-toggle" name="debug-toggle" type="checkbox">
+          Enable Debug Mode
+        </label>
+      </div>
+
+      <div id="actions">
+        <button id="reset-button">Reset to defaults</button>
+        <button id="regenerate-button">Regenerate data</button>
+      </div>
+
+      <p id="storage-display"></p>
+    </div>
+
+    <script src="index.js" type="module"></script>
   </body>
 </html>
