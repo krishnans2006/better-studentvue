@@ -3,7 +3,6 @@
   "name": "Better StudentVUE",
   "description": "Improves the StudentVUE experience",
   "version": "1.0",
-  "options_page": "options/index.html",
   "action": {
     "default_popup": "popup/index.html",
     "default_icon": {
