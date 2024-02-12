@@ -2,9 +2,17 @@ body {
     min-width: 300px;
 }
 
-#content {
+#content, #footer {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+#footer {
+    margin-bottom: 20px;
+}
+
+#footer p {
+    margin: 0;
 }
