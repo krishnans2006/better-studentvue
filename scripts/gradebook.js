@@ -88,17 +88,29 @@ const content = document.querySelector("#gradebook-content");
 
 let scriptTimer;
 
-// Maybe use MutationObserver instead?
-content.addEventListener("DOMSubtreeModified", () => {
-    if (myModification) {  // prevent infinite loop
-        setTimeout(() => myModification = false, 50);
-        clearTimeout(scriptTimer);
-        return;
-    }
-    if (scriptTimer) {
-        clearTimeout(scriptTimer);
-    }
-    scriptTimer = setTimeout(script, 100);
-});
+chrome.storage.sync.get("settings").then((data) => {
+    if (data.settings.enabled) {
+        console.log("Gradebook enabled.")
 
-script();
+        // Maybe use MutationObserver instead?
+        content.addEventListener("DOMSubtreeModified", () => {
+            if (myModification) {  // prevent infinite loop
+                setTimeout(() => myModification = false, 50);
+                clearTimeout(scriptTimer);
+                return;
+            }
+            if (scriptTimer) {
+                clearTimeout(scriptTimer);
+            }
+            scriptTimer = setTimeout(script, 100);
+        });
+
+        script();
+    } else {
+        console.log("Gradebook disabled.")
+
+        if (scriptTimer) {
+            clearTimeout(scriptTimer);
+        }
+    }
+});
