@@ -9,6 +9,18 @@ body {
     justify-content: center;
 }
 
+#storage-display-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+#storage-display {
+    margin: 0;
+}
+
 #footer {
     display: flex;
     flex-direction: column;

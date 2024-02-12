@@ -96,19 +96,18 @@ for (const key in settingsActions) {
 let storageDisplayTimer;
 
 function updateStorageDisplay() {
-    const displayElement = document.querySelector("#storage-display");
+    const displayElement = document.querySelector("#storage-display-container");
 
     chrome.storage.sync.get("settings").then((data) => {
         const debugMode = data.settings.debug;
         if (debugMode) {
-            displayElement.innerText = JSON.stringify(data);
-            displayElement.innerText += "\n\n";
+            displayElement.innerHTML = `<h4>Storage</h4>${JSON.stringify(data, null, 4)}<br /></br />`;
         } else {
-            displayElement.innerText = "";
+            displayElement.innerHTML = "";
         }
     });
 
-    storageDisplayTimer = setTimeout(updateStorageDisplay, 20);
+    storageDisplayTimer = setTimeout(updateStorageDisplay, 200);
 }
 
-storageDisplayTimer = setTimeout(updateStorageDisplay, 20);
+storageDisplayTimer = setTimeout(updateStorageDisplay, 200);
